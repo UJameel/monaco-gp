@@ -427,3 +427,9 @@ Zero console errors; 103 fps measured on a cold page immediately after a browser
 121 fps, zero console errors.
 - **A laundry line hangs between the first two old-town houses on Le Rocher**: two rope segments meeting at a sag point (computed from the exact house-placement math rather than guessed coordinates — the pass-35 floating-house lesson), with five pegged cloths in white/blue/red/yellow that follow the sag curve and flutter on two overlaid sine breezes.
 - A small, look-up detail: from the base of the mesa the coloured cloths read against the sky between the roofs (r61-laundry); from across the plaza they're a hint of village life below the palace (r61-rocher-context).
+
+## Loop pass 67 — 2026-07-06 (feed the pigeons)
+121 fps, zero console errors.
+- **You can now feed the pigeons**: near the Casino Square fountain the prompt shows "F — FEED THE PIGEONS"; pressing F tosses a handful of crumbs 1.7 m ahead (guarded against landing in the fountain basin). Every pigeon on the ground walks over — waddling with a quick head-bob, facing its direction of travel — takes a spot on a ring around the crumbs, and pecks fast at the food. While food is out their scatter radius shrinks from 4.5 m to 1.4 m, so they'll feed at your feet; after 14 s the crumbs vanish and normal wander/scatter resumes.
+- Verified numerically via a new __mc.pigeonDists() getter: distances to the crumbs went from [14.2, 10.7, 4.8, 3.8, 11.1, 17.3, 15.8] at the drop to [4.1, 0.85, 5.7, 0.85, 1.1, 7.2, 5.7] six seconds later — all seven converging, three already feeding, none scattering with the player 1.7 m away.
+- Second player-triggered interaction in the world (after sit/ride/tour) and the first that commands the wildlife.

@@ -1178,6 +1178,19 @@ const pigeons=[];
     g.position.set(-20+Math.cos(a)*r,6.02,-104+Math.sin(a)*r);
     g.rotation.y=a+1.2;scene.add(g);
     pigeons.push({g,w1,w2,mode:0,t0:0,fx:0,fz:0,tx:0,tz:0,by:a+1.2,ph:i*1.37});}})();
+/* crumbs for feeding the pigeons (F near the fountain) */
+let crumbs=null;
+const crumbGrp=(function(){const g=new THREE.Group();g.visible=false;scene.add(g);
+  const m=std(0xd8c48a,.9);
+  for(let i=0;i<7;i++){const c=new THREE.Mesh(new THREE.SphereGeometry(.028,5,4),m);
+    c.position.set(Math.cos(i*2.4)*.3*(1+i%2*.6),.02,Math.sin(i*2.4)*.3*(1+i%2*.5));
+    g.add(c);}return g;})();
+function dropCrumbs(){
+  const cx=P.x-Math.sin(P.yaw)*1.7,cz=P.z-Math.cos(P.yaw)*1.7;
+  const bx=cx+20,bz=cz+104;
+  if(bx*bx+bz*bz<45)return; /* not into the fountain basin */
+  crumbGrp.position.set(cx,6.02,cz);crumbGrp.visible=true;
+  crumbs={x:cx,z:cz,until:clockT.elapsedTime+14};}
 
 /* ============================ BOUTIQUE ROW ============================ */
 const SHOPS=[['LUMIÈRE','#caa84e'],['MAISON NOIR','#cfd4dc'],['ÉLYSÉE','#d98aa6'],["ORO D'AZUR",'#6fb3c9']];
@@ -2772,6 +2785,8 @@ document.addEventListener('keydown',e=>{const k=keyMap[e.code];
     if(riding||Math.hypot(P.x-141,P.z-108)<15)toggleRide();
     else toggleSit();}
   if(e.code==='KeyG'){tourOn=!tourOn;if(tourOn){sitting=null;riding=false;tourNext=0;}}
+  if(e.code==='KeyF'&&!sitting&&!riding&&
+    Math.hypot(P.x+20,P.z+104)<16&&Math.abs(P.feet-6)<3)dropCrumbs();
   if(e.code==='KeyP')document.body.classList.toggle('photo');});
 document.addEventListener('keyup',e=>{const k=keyMap[e.code];if(k)input[k]=false;});
 
@@ -2986,13 +3001,24 @@ function animateLife(t){
   {const ha=(hour%12)/12*Math.PI*2,ma=(hour*60%60)/60*Math.PI*2;
     for(const ch of clockHands){ch.h.rotation.z=-ha*ch.s;ch.m.rotation.z=-ma*ch.s;}}
   /* pigeons: peck and wander on the plaza, scatter from the player */
+  if(crumbs&&t>crumbs.until){crumbs=null;crumbGrp.visible=false;}
   for(const pg of pigeons){const g=pg.g;
     if(pg.mode===0){
-      g.rotation.x=Math.max(0,Math.sin(t*2.2+pg.ph))*.45;
-      g.rotation.y=pg.by+Math.sin(t*.31+pg.ph)*1.1;
+      if(crumbs){
+        const tx=crumbs.x+Math.cos(pg.ph)*.6,tz=crumbs.z+Math.sin(pg.ph)*.6;
+        const ddx=tx-g.position.x,ddz=tz-g.position.z,dd=Math.hypot(ddx,ddz);
+        if(dd>.25){g.position.x+=ddx/dd*.014;g.position.z+=ddz/dd*.014;
+          g.rotation.y=Math.atan2(-ddz,ddx);
+          g.rotation.x=Math.max(0,Math.sin(t*9+pg.ph))*.18;}
+        else{g.rotation.y=Math.atan2(-(crumbs.z-g.position.z),crumbs.x-g.position.x);
+          pg.by=g.rotation.y;
+          g.rotation.x=Math.max(0,Math.sin(t*5+pg.ph))*.55;}
+      }else{
+        g.rotation.x=Math.max(0,Math.sin(t*2.2+pg.ph))*.45;
+        g.rotation.y=pg.by+Math.sin(t*.31+pg.ph)*1.1;}
       pg.w1.rotation.x=0;pg.w2.rotation.x=0;
       const dx=g.position.x-P.x,dz=g.position.z-P.z;
-      if(dx*dx+dz*dz<20&&Math.abs(P.feet-6)<3){
+      if(dx*dx+dz*dz<(crumbs?2:20)&&Math.abs(P.feet-6)<3){
         pg.mode=1;pg.t0=t;pg.fx=g.position.x;pg.fz=g.position.z;
         const dd=Math.max(.6,Math.hypot(dx,dz));
         let tx=g.position.x+dx/dd*(8+(pg.ph%2)*3),tz=g.position.z+dz/dd*(8+(pg.ph%2)*3);
@@ -3177,10 +3203,12 @@ function animate(){
   const rp=document.getElementById('ridePrompt');
   const nearWheel=Math.hypot(P.x-141,P.z-108)<15;
   const ns=sitting?null:nearSit();
+  const nearFeed=!sitting&&!riding&&Math.hypot(P.x+20,P.z+104)<16&&Math.abs(P.feet-6)<3;
   rp.textContent=tourOn?'G — END TOUR · ANY KEY TO EXPLORE':
     riding?'E — HOP OFF':sitting?'E — STAND UP':
-    nearWheel?'E — RIDE THE FERRIS WHEEL':ns?('E — SIT · '+ns.n):'';
-  rp.classList.toggle('show',started&&(tourOn||riding||sitting||nearWheel||!!ns));
+    nearWheel?'E — RIDE THE FERRIS WHEEL':ns?('E — SIT · '+ns.n):
+    nearFeed?'F — FEED THE PIGEONS':'';
+  rp.classList.toggle('show',started&&(tourOn||riding||sitting||nearWheel||!!ns||nearFeed));
   const hh=Math.floor(hour),mm=Math.floor((hour-hh)*60);
   clockEl.textContent=(hh<10?'0':'')+hh+':'+(mm<10?'0':'')+mm;
   if(started){hintT+=dt;if(hintT>12)hintEl.style.opacity=0;}
@@ -3230,6 +3258,8 @@ window.__mc={
     return{x:Math.round(p.x*10)/10,y:Math.round(p.y*10)/10,z:Math.round(p.z*10)/10};},
   heliPos(){const p=heli.g.position;return{x:Math.round(p.x),y:Math.round(p.y),z:Math.round(p.z)};},
   dogPos(){const p=dogWalk.g.position;return{x:Math.round(p.x*10)/10,z:p.z,ry:Math.round(dogWalk.g.rotation.y*100)/100};},
+  pigeonDists(){if(!crumbs)return null;
+    return pigeons.map(pg=>Math.round(Math.hypot(pg.g.position.x-crumbs.x,pg.g.position.z-crumbs.z)*100)/100);},
   tenderPos(){const p=tender.position;return{x:Math.round(p.x*10)/10,z:Math.round(p.z*10)/10};},
   clip(half){const hw=half||6;const out=[];
     for(let i=0;i<trackSamples.length;i+=1){const p=trackSamples[i];
