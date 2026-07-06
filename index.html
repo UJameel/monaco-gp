@@ -1287,6 +1287,36 @@ B(.08,.08,30.2,chromeMat,-28.2,.85,107,{cast:false});B(.08,.08,30.2,chromeMat,8.
 B(8,.5,5,concMat,-20,4.75,88.5,{coll:true});
 B(8,.5,5,concMat,-20,2.75,88.5);
 B(1,5,1,concMat,-16.5,2.5,90.5,{coll:true});B(1,5,1,concMat,-23.5,2.5,90.5,{coll:true});
+/* kid flying a kite over the promenade */
+const kite=(function(){
+  const sk=std(0xdcb18a,.7);
+  const kg=new THREE.Group();kg.position.set(40,0,95);scene.add(kg);
+  [-.05,.05].forEach(z=>{const l=new THREE.Mesh(geoBox,sk);l.scale.set(.09,.45,.09);
+    l.position.set(0,.22,z);kg.add(l);});
+  const tee=new THREE.Mesh(geoBox,std(0xe8a02e,.75));tee.scale.set(.2,.34,.26);tee.position.y=.62;kg.add(tee);
+  const hd=new THREE.Mesh(new THREE.SphereGeometry(.095,9,7),sk);hd.position.y=.9;kg.add(hd);
+  const hr=new THREE.Mesh(new THREE.SphereGeometry(.1,9,7),std(0x6a4a22,.85));
+  hr.scale.set(1,.7,1);hr.position.y=.94;kg.add(hr);
+  const arm=new THREE.Mesh(geoBox,std(0xe8a02e,.75));arm.scale.set(.07,.34,.07);
+  arm.position.set(.1,.92,0);arm.rotation.z=-2.4;kg.add(arm);
+  kg.traverse(m=>{m.castShadow=true;});
+  solid(39.6,94.6,40.4,95.4,0,1.4);
+  /* the kite */
+  const g=new THREE.Group();scene.add(g);
+  const sail=new THREE.Mesh(new THREE.PlaneGeometry(.85,.85),
+    new THREE.MeshStandardMaterial({color:0xd8302a,roughness:.6,side:THREE.DoubleSide,
+      emissive:0xd8302a,emissiveIntensity:.15}));
+  sail.rotation.z=Math.PI/4;g.add(sail);
+  [[0,0,Math.PI/4],[0,0,-Math.PI/4]].forEach(r=>{const sp=new THREE.Mesh(geoBox,std(0xe8d46a,.5));
+    sp.scale.set(1.15,.025,.02);sp.rotation.z=r[2];g.add(sp);});
+  const tail=[];
+  for(let k=0;k<3;k++){const b=new THREE.Mesh(new THREE.PlaneGeometry(.16,.1),
+    new THREE.MeshStandardMaterial({color:[0xe8d46a,0x4a90d8,0xe8e2d4][k],roughness:.7,side:THREE.DoubleSide}));
+    g.add(b);tail.push(b);}
+  const line=new THREE.Mesh(new THREE.CylinderGeometry(.006,.006,1,4),
+    new THREE.MeshBasicMaterial({color:0xd8d8d0}));
+  scene.add(line);
+  return {g,line,tail,hx:40.12,hy:1.15,hz:95};})();
 /* gelato cart by the beach */
 const gelato=(function(){
   const cream=std(0xf2ead8,.6),red=std(0xc0392e,.6),sk=std(0xdcb18a,.7);
@@ -3058,6 +3088,17 @@ function animateLife(t){
   heli.rotor.rotation.y=t*26;heli.tr.rotation.x=t*30;
   buoys.forEach((b,i)=>{b.position.y=-2.05+Math.sin(t*.9+i*1.7)*.16;
     b.rotation.x=Math.sin(t*.7+i)*.09;b.rotation.z=Math.cos(t*.6+i*2.1)*.09;});
+  /* kite loops overhead, string tracks it */
+  {const kx=40+Math.sin(t*.5)*6,ky=10+Math.sin(t*.7)*1.6,kz=95+Math.sin(t*1.0)*2.6;
+    kite.g.position.set(kx,ky,kz);
+    kite.g.rotation.z=Math.sin(t*.5)*.35;kite.g.rotation.y=Math.sin(t*.33)*.4;
+    kite.g.rotation.x=-.25;
+    kite.tail.forEach((b,k)=>{b.position.set(Math.sin(t*3+k)*.1,-.75-k*.28,Math.cos(t*2.6+k)*.08);});
+    const dx=kx-kite.hx,dy=ky-kite.hy,dz=kz-kite.hz,len=Math.sqrt(dx*dx+dy*dy+dz*dz);
+    kite.line.position.set(kite.hx+dx/2,kite.hy+dy/2,kite.hz+dz/2);
+    kite.line.scale.y=len;
+    kite.line.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),
+      new THREE.Vector3(dx/len,dy/len,dz/len));}
   /* gelato vendor scooping */
   gelato.scoopArm.rotation.x=-.5+Math.sin(t*2.4)*.3;
   /* pétanque: wind-up, release, ball arcs onto the court */

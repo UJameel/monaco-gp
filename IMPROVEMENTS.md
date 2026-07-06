@@ -433,3 +433,8 @@ Zero console errors; 103 fps measured on a cold page immediately after a browser
 - **You can now feed the pigeons**: near the Casino Square fountain the prompt shows "F — FEED THE PIGEONS"; pressing F tosses a handful of crumbs 1.7 m ahead (guarded against landing in the fountain basin). Every pigeon on the ground walks over — waddling with a quick head-bob, facing its direction of travel — takes a spot on a ring around the crumbs, and pecks fast at the food. While food is out their scatter radius shrinks from 4.5 m to 1.4 m, so they'll feed at your feet; after 14 s the crumbs vanish and normal wander/scatter resumes.
 - Verified numerically via a new __mc.pigeonDists() getter: distances to the crumbs went from [14.2, 10.7, 4.8, 3.8, 11.1, 17.3, 15.8] at the drop to [4.1, 0.85, 5.7, 0.85, 1.1, 7.2, 5.7] six seconds later — all seven converging, three already feeding, none scattering with the player 1.7 m away.
 - Second player-triggered interaction in the world (after sit/ride/tour) and the first that commands the wildlife.
+
+## Loop pass 68 — 2026-07-06 (kite flyer)
+121 fps, zero console errors.
+- **A kid flies a kite over the east promenade** (40,95): red diamond sail with gold cross-spars and a faint glow so it reads at dusk, three fluttering tail bows in yellow/blue/white, looping a slow 3-axis figure pattern 10 m up with banking rolls. The string is a live cylinder re-oriented every frame between the kid's raised hand and the kite — always taut, always connected.
+- Audit-first paid off again: the planned feature was palm sway, which grep showed already exists (palmHeads instanced sway) — pivoted to the kite instead of duplicating.
