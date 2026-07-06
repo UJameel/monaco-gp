@@ -422,3 +422,8 @@ Zero console errors; sit/stand verified at all three spots.
 ## Loop pass 65 — 2026-07-06 (slow-dancing couple)
 Zero console errors; 103 fps measured on a cold page immediately after a browser relaunch (the test browser dropped mid-pass — a session-length issue seen before, not a world bug; all warmed-page probes this session read 120–121).
 - **A couple slow-dances to the violinist** near La Rascasse (97,64.5): him in navy, her in a coral gown, facing each other with joined arms bridging the frame, turning slowly (0.32 rad/s) with a gentle sway and rise on the beat. Extends the pass-61 busker corner into a proper street scene: musician, listeners, coins, and now dancing.
+
+## Loop pass 66 — 2026-07-06 (old-town laundry line)
+121 fps, zero console errors.
+- **A laundry line hangs between the first two old-town houses on Le Rocher**: two rope segments meeting at a sag point (computed from the exact house-placement math rather than guessed coordinates — the pass-35 floating-house lesson), with five pegged cloths in white/blue/red/yellow that follow the sag curve and flutter on two overlaid sine breezes.
+- A small, look-up detail: from the base of the mesa the coloured cloths read against the sky between the roofs (r61-laundry); from across the plaza they're a hint of village life below the palace (r61-rocher-context).
