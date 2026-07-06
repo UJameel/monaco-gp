@@ -405,3 +405,7 @@ Zero console errors; sit/stand verified at all three spots.
 ## Loop pass 61 — 2026-07-06 (street violinist)
 121 fps, zero console errors.
 - **A violinist busks between the market and the café** (95,62): black suit, violin tucked at the neck, bow arm sawing at 4.6 rad/s with a slow body sway, an open case at his feet with three gold coins catching the light, and two listeners stopped mid-stroll to watch. Spot verified against the market stalls, café tables, and both walker route lines before building.
+
+## Loop pass 62 — 2026-07-06 (gelato cart)
+121 fps, zero console errors.
+- **A gelato cart by the beach** (24,88): cream cart with a red band, dark-glass display case, four wheels, and a chrome pole carrying a two-tone red/cream parasol. The vendor behind it wears a red cap and works a slow scooping arm; a mum queues while her kid in a green tee already holds a strawberry cone. Spot checked clear of the pool wall, sunbeds, kids' chase circle, and walker routes.

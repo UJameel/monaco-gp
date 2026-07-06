@@ -1210,6 +1210,52 @@ B(.08,.08,30.2,chromeMat,-28.2,.85,107,{cast:false});B(.08,.08,30.2,chromeMat,8.
 B(8,.5,5,concMat,-20,4.75,88.5,{coll:true});
 B(8,.5,5,concMat,-20,2.75,88.5);
 B(1,5,1,concMat,-16.5,2.5,90.5,{coll:true});B(1,5,1,concMat,-23.5,2.5,90.5,{coll:true});
+/* gelato cart by the beach */
+const gelato=(function(){
+  const cream=std(0xf2ead8,.6),red=std(0xc0392e,.6),sk=std(0xdcb18a,.7);
+  const body=new THREE.Mesh(geoBox,cream);body.scale.set(1.5,.95,.85);
+  body.position.set(24,.85,88);body.castShadow=true;scene.add(body);
+  const stripe=new THREE.Mesh(geoBox,red);stripe.scale.set(1.52,.24,.87);
+  stripe.position.set(24,1.12,88);scene.add(stripe);
+  const glass=new THREE.Mesh(geoBox,darkGlass);glass.scale.set(1.3,.3,.6);
+  glass.position.set(24,1.5,88);scene.add(glass);
+  [[23.4,87.6],[24.6,87.6],[23.4,88.4],[24.6,88.4]].forEach(p=>{
+    const w=new THREE.Mesh(new THREE.CylinderGeometry(.16,.16,.06,10),std(0x2a2c33,.6));
+    w.rotation.x=Math.PI/2;w.position.set(p[0],.16,p[1]);scene.add(w);});
+  const pole=new THREE.Mesh(new THREE.CylinderGeometry(.035,.035,2.6,6),chromeMat);
+  pole.position.set(24,2.2,88);scene.add(pole);
+  const can=new THREE.Mesh(new THREE.ConeGeometry(1.15,.5,10),red);
+  can.position.set(24,3.4,88);can.castShadow=true;scene.add(can);
+  const canT=new THREE.Mesh(new THREE.ConeGeometry(.6,.28,10),cream);
+  canT.position.set(24,3.62,88);scene.add(canT);
+  solid(23.2,87.5,24.8,88.5,0,1.9);
+  /* vendor behind the cart, scooping */
+  const vg=new THREE.Group();vg.position.set(24,0,89.2);vg.rotation.y=Math.PI;scene.add(vg);
+  [-.09,.09].forEach(z=>{const l=new THREE.Mesh(geoBox,std(0x33302a,.85));
+    l.scale.set(.13,.8,.13);l.position.set(0,.4,z);vg.add(l);});
+  const vt=new THREE.Mesh(geoBox,cream);vt.scale.set(.26,.6,.36);vt.position.y=1.14;vg.add(vt);
+  const vh=new THREE.Mesh(new THREE.SphereGeometry(.11,10,8),sk);vh.position.y=1.56;vg.add(vh);
+  const vc=new THREE.Mesh(new THREE.CylinderGeometry(.1,.12,.14,10),red);
+  vc.position.y=1.72;vg.add(vc);
+  const scoopArm=new THREE.Group();scoopArm.position.set(0,1.42,.2);vg.add(scoopArm);
+  const sa=new THREE.Mesh(geoBox,cream);sa.scale.set(.08,.48,.08);sa.position.y=-.22;scoopArm.add(sa);
+  /* queue: a mum and a kid already licking a cone */
+  const qg=new THREE.Group();qg.position.set(22.6,0,89.6);qg.rotation.y=2.6;scene.add(qg);
+  [-.09,.09].forEach(z=>{const l=new THREE.Mesh(geoBox,std(0x33302a,.85));
+    l.scale.set(.13,.8,.13);l.position.set(0,.4,z);qg.add(l);});
+  const qt=new THREE.Mesh(geoBox,std(0x6a4a78,.75));qt.scale.set(.26,.6,.36);qt.position.y=1.14;qg.add(qt);
+  const qh=new THREE.Mesh(new THREE.SphereGeometry(.11,10,8),sk);qh.position.y=1.56;qg.add(qh);
+  const kg=new THREE.Group();kg.position.set(22.2,0,88.6);kg.rotation.y=1.9;scene.add(kg);
+  [-.05,.05].forEach(z=>{const l=new THREE.Mesh(geoBox,sk);l.scale.set(.09,.45,.09);
+    l.position.set(0,.22,z);kg.add(l);});
+  const kt=new THREE.Mesh(geoBox,std(0x2eb45a,.75));kt.scale.set(.2,.34,.26);kt.position.y=.62;kg.add(kt);
+  const kh=new THREE.Mesh(new THREE.SphereGeometry(.095,9,7),sk);kh.position.y=.9;kg.add(kh);
+  const cone=new THREE.Mesh(new THREE.ConeGeometry(.035,.1,6),std(0xc9973a,.7));
+  cone.rotation.x=Math.PI;cone.position.set(.12,.78,.08);kg.add(cone);
+  const sc2=new THREE.Mesh(new THREE.SphereGeometry(.045,7,5),std(0xf5dfe2,.4));
+  sc2.position.set(.12,.85,.08);kg.add(sc2);
+  [vg,qg,kg].forEach(g=>g.traverse(m=>{m.castShadow=true;}));
+  return {scoopArm};})();
 /* pétanque game on the pool plaza */
 const petanque=(function(){
   B(5,.06,3.4,std(0xc9b485,.95),-28,.03,79,{cast:false});
@@ -2875,6 +2921,8 @@ function animateLife(t){
   heli.rotor.rotation.y=t*26;heli.tr.rotation.x=t*30;
   buoys.forEach((b,i)=>{b.position.y=-2.05+Math.sin(t*.9+i*1.7)*.16;
     b.rotation.x=Math.sin(t*.7+i)*.09;b.rotation.z=Math.cos(t*.6+i*2.1)*.09;});
+  /* gelato vendor scooping */
+  gelato.scoopArm.rotation.x=-.5+Math.sin(t*2.4)*.3;
   /* pétanque: wind-up, release, ball arcs onto the court */
   {const f=t%7,p=petanque;
     p.armG.rotation.x=f<1.2?-.6+Math.sin(f/1.2*Math.PI)*1.3:-.6;
