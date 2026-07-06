@@ -409,3 +409,8 @@ Zero console errors; sit/stand verified at all three spots.
 ## Loop pass 62 — 2026-07-06 (gelato cart)
 121 fps, zero console errors.
 - **A gelato cart by the beach** (24,88): cream cart with a red band, dark-glass display case, four wheels, and a chrome pole carrying a two-tone red/cream parasol. The vendor behind it wears a red cap and works a slow scooping arm; a mum queues while her kid in a green tee already holds a strawberry cone. Spot checked clear of the pool wall, sunbeds, kids' chase circle, and walker routes.
+
+## Loop pass 63 — 2026-07-06 (trackside photographers)
+121 fps, zero console errors.
+- **Two accredited photographers work the Ste Dévote tyre barrier** (−123.5,−160 / −122.6,−156.5): green photo vests, one crouched low and one standing, long dark lenses aimed at the apex, each with a night-gated flash that joins the crowdFlashes cycle after dark.
+- Full safety protocol: 20 s of 8-car sampling scored the spot at 11.5 m minimum clearance (a second candidate at 8.2 m was rejected). Also dodged a TDZ crash — the block initially sat above the crowdFlashes declaration it pushes into, and was moved below it before ever loading.
