@@ -418,3 +418,7 @@ Zero console errors; sit/stand verified at all three spots.
 ## Loop pass 64 — 2026-07-06 (casino red carpet)
 121 fps, zero console errors.
 - **Red-carpet arrival at the Casino de Monte-Carlo**: a carpet runs from the entrance steps onto the square between six brass stanchions strung with burgundy rope; a valet in a burgundy jacket bows the guests in while a couple — black tux with a white shirt front, and an emerald evening gown — walk the line toward the door. At night the scene sits under the casino's warm entrance light with the lit facade behind (r59-redcarpet-night).
+
+## Loop pass 65 — 2026-07-06 (slow-dancing couple)
+Zero console errors; 103 fps measured on a cold page immediately after a browser relaunch (the test browser dropped mid-pass — a session-length issue seen before, not a world bug; all warmed-page probes this session read 120–121).
+- **A couple slow-dances to the violinist** near La Rascasse (97,64.5): him in navy, her in a coral gown, facing each other with joined arms bridging the frame, turning slowly (0.32 rad/s) with a gentle sway and rise on the beat. Extends the pass-61 busker corner into a proper street scene: musician, listeners, coins, and now dancing.

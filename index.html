@@ -1569,6 +1569,29 @@ const busker=(function(){
   g.traverse(m=>{m.castShadow=true;});
   solid(94.6,61.6,95.4,62.4,0,1.8);
   return {g,bowArm};})();
+/* couple slow-dancing to the violin */
+const dancers=(function(){const g=new THREE.Group();g.position.set(97,0,64.5);scene.add(g);
+  const sk=std(0xdcb18a,.7),navy=std(0x24365a,.7),coral=std(0xd4756a,.5);
+  /* him */
+  [-.09,.09].forEach(z=>{const l=new THREE.Mesh(geoBox,std(0x14161c,.7));
+    l.scale.set(.13,.8,.13);l.position.set(-.3,.4,z);g.add(l);});
+  const mt=new THREE.Mesh(geoBox,navy);mt.scale.set(.26,.6,.36);mt.position.set(-.3,1.14,0);g.add(mt);
+  const mh=new THREE.Mesh(new THREE.SphereGeometry(.11,10,8),sk);mh.position.set(-.3,1.56,0);g.add(mh);
+  /* her */
+  const gown=new THREE.Mesh(new THREE.CylinderGeometry(.13,.3,1.1,10),coral);
+  gown.position.set(.3,.55,0);g.add(gown);
+  const wt=new THREE.Mesh(geoBox,coral);wt.scale.set(.22,.34,.24);wt.position.set(.3,1.26,0);g.add(wt);
+  const wh=new THREE.Mesh(new THREE.SphereGeometry(.1,10,8),sk);wh.position.set(.3,1.58,0);g.add(wh);
+  const whr=new THREE.Mesh(new THREE.SphereGeometry(.105,10,8),std(0x5a3a22,.85));
+  whr.scale.set(1,.72,1);whr.position.set(.3,1.62,0);g.add(whr);
+  /* joined arms bridging the frame */
+  const a1=new THREE.Mesh(geoBox,navy);a1.scale.set(.5,.07,.07);
+  a1.position.set(0,1.28,.14);a1.rotation.z=.1;g.add(a1);
+  const a2=new THREE.Mesh(geoBox,coral);a2.scale.set(.5,.07,.07);
+  a2.position.set(0,1.38,-.14);a2.rotation.z=-.1;g.add(a2);
+  g.traverse(m=>{m.castShadow=true;});
+  solid(96.5,64,97.5,65,0,1.8);
+  return g;})();
 /* ornate street clock on the east promenade — hands run on the game hour */
 const clockHands=[];
 (function horloge(){const green=std(0x1e4a3a,.6,.2);
@@ -2931,6 +2954,10 @@ function animateLife(t){
     r.dlegs[0].rotation.x=Math.sin(dtau)*.6;r.dlegs[3].rotation.x=Math.sin(dtau)*.6;
     r.dlegs[1].rotation.x=-Math.sin(dtau)*.6;r.dlegs[2].rotation.x=-Math.sin(dtau)*.6;
     r.tail.rotation.y=Math.sin(t*9)*.35;}
+  /* dancers turn slowly to the music */
+  dancers.rotation.y=t*.32;
+  dancers.rotation.z=Math.sin(t*1.15)*.035;
+  dancers.position.y=Math.abs(Math.sin(t*1.15))*.03;
   /* violinist: bow saws, body sways */
   busker.bowArm.rotation.x=-.85+Math.sin(t*4.6)*.28;
   busker.g.rotation.z=Math.sin(t*1.1)*.03;
