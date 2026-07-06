@@ -414,3 +414,7 @@ Zero console errors; sit/stand verified at all three spots.
 121 fps, zero console errors.
 - **Two accredited photographers work the Ste Dévote tyre barrier** (−123.5,−160 / −122.6,−156.5): green photo vests, one crouched low and one standing, long dark lenses aimed at the apex, each with a night-gated flash that joins the crowdFlashes cycle after dark.
 - Full safety protocol: 20 s of 8-car sampling scored the spot at 11.5 m minimum clearance (a second candidate at 8.2 m was rejected). Also dodged a TDZ crash — the block initially sat above the crowdFlashes declaration it pushes into, and was moved below it before ever loading.
+
+## Loop pass 64 — 2026-07-06 (casino red carpet)
+121 fps, zero console errors.
+- **Red-carpet arrival at the Casino de Monte-Carlo**: a carpet runs from the entrance steps onto the square between six brass stanchions strung with burgundy rope; a valet in a burgundy jacket bows the guests in while a couple — black tux with a white shirt front, and an emerald evening gown — walk the line toward the door. At night the scene sits under the casino's warm entrance light with the lit facade behind (r59-redcarpet-night).
