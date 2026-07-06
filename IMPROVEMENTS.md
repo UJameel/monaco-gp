@@ -438,3 +438,8 @@ Zero console errors; 103 fps measured on a cold page immediately after a browser
 121 fps, zero console errors.
 - **A kid flies a kite over the east promenade** (40,95): red diamond sail with gold cross-spars and a faint glow so it reads at dusk, three fluttering tail bows in yellow/blue/white, looping a slow 3-axis figure pattern 10 m up with banking rolls. The string is a live cylinder re-oriented every frame between the kid's raised hand and the kite — always taut, always connected.
 - Audit-first paid off again: the planned feature was palm sway, which grep showed already exists (palmHeads instanced sway) — pivoted to the kite instead of duplicating.
+
+## Loop pass 69 — 2026-07-06 (selfie couple)
+Zero console errors. fps note below.
+- **A couple poses for a selfie at the harbor rail** (52,57): her in a yellow sundress, him in a blue polo with his arm extended holding the phone, heads tilted together, backs to the water — the classic tourist shot, with a phone flash that joins the night flash cycle. The filed screenshot is taken from the water side: exactly what their camera sees (r64-selfie).
+- fps probe read 31 this pass. Diagnosed properly before blaming the change: a git-stash A/B showed the previous pass's file measures the identical 31 in the same browser session — the throttle is environmental (Playwright window occlusion / machine load pinning rAF to ~30 Hz), not a world regression. Same file measured 121 two passes ago.

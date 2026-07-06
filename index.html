@@ -1594,6 +1594,34 @@ B(220,110,800,hillFar,-430,14,-40,{cast:false});
 /* world bounds */
 solid(-240,-235,240,-228,0,40);solid(-240,148,240,155,0,40);
 solid(-238,-235,-230,155,0,40);solid(150,-235,158,155,0,40);
+/* selfie couple at the harbor rail */
+const selfie=(function(){
+  const sk=std(0xecc9a4,.7);
+  const g=new THREE.Group();g.position.set(52,0,57);g.rotation.y=Math.PI;scene.add(g);
+  /* she — sundress */
+  const dress=new THREE.Mesh(new THREE.CylinderGeometry(.13,.28,1.05,10),std(0xe8b64a,.55));
+  dress.position.set(-.3,.55,0);g.add(dress);
+  const st=new THREE.Mesh(geoBox,std(0xe8b64a,.55));st.scale.set(.22,.32,.24);st.position.set(-.3,1.24,0);g.add(st);
+  const sh=new THREE.Mesh(new THREE.SphereGeometry(.1,10,8),sk);sh.position.set(-.3,1.56,0);sh.rotation.z=-.12;g.add(sh);
+  const shr=new THREE.Mesh(new THREE.SphereGeometry(.105,10,8),std(0x7a4a22,.85));
+  shr.scale.set(1,.74,1);shr.position.set(-.3,1.6,0);g.add(shr);
+  /* he — polo, holds the phone out */
+  [-.09,.09].forEach(z=>{const l=new THREE.Mesh(geoBox,std(0xd8d2c2,.8));
+    l.scale.set(.13,.8,.13);l.position.set(.3,.4,z+0);g.add(l);});
+  const pt=new THREE.Mesh(geoBox,std(0x3a6ea8,.7));pt.scale.set(.26,.6,.36);pt.position.set(.3,1.14,0);g.add(pt);
+  const ph=new THREE.Mesh(new THREE.SphereGeometry(.11,10,8),sk);ph.position.set(.3,1.56,0);ph.rotation.z=.12;g.add(ph);
+  const arm=new THREE.Mesh(geoBox,std(0x3a6ea8,.7));arm.scale.set(.08,.62,.08);
+  arm.position.set(.32,1.32,.42);arm.rotation.x=-1.15;g.add(arm);
+  const phone=new THREE.Mesh(geoBox,std(0x17181a,.4,.3));phone.scale.set(.1,.16,.02);
+  phone.position.set(.32,1.52,.78);g.add(phone);
+  const fl=new THREE.Mesh(new THREE.PlaneGeometry(.28,.28),
+    new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:0,
+      blending:THREE.AdditiveBlending,depthWrite:false}));
+  fl.position.set(.32,1.52,.76);g.add(fl);
+  crowdFlashes.push({m:fl.material,iv:4.4,ph:.7});
+  g.traverse(m=>{m.castShadow=true;});
+  solid(51.4,56.5,52.9,57.5,0,1.8);
+  return g;})();
 /* street violinist between the market and the café */
 const busker=(function(){
   const suit=std(0x14161c,.7),sk=std(0xecc9a4,.7);
@@ -3020,6 +3048,8 @@ function animateLife(t){
     r.tail.rotation.y=Math.sin(t*9)*.35;}
   /* laundry flutters on the mesa breeze */
   for(const L of laundry){L.g.rotation.x=Math.sin(t*2.6+L.ph)*.32+Math.sin(t*.9+L.ph*2)*.1;}
+  /* selfie couple settle into the pose */
+  selfie.rotation.z=Math.sin(t*.9)*.02;
   /* dancers turn slowly to the music */
   dancers.rotation.y=t*.32;
   dancers.rotation.z=Math.sin(t*1.15)*.035;
