@@ -396,3 +396,8 @@ Zero console errors; sit/stand verified at all three spots.
 121 fps, zero console errors.
 - **A cyclist cruises the west quay** (x −86.5, z −24..40, ping-pong at ~3.5 m/s): green-framed bike with torus rims and three visible spokes per wheel (so the spin reads), fork, crossbar, handlebars and saddle; rider in a yellow jersey leaning onto the bars with alternating thigh pump, white cap. Smooth 180° turn at each end of the run.
 - Route reuses the proven west-quay walker corridor. Verified riding past the AURELIA gangway mid-frame (r54-cyclist).
+
+## Loop pass 60 — 2026-07-06 (pétanque)
+121 fps, zero console errors.
+- **A pétanque game on the pool plaza** (court at −28,79): gravel slab, five boules and an orange jack clustered at the far end, a thrower in a white shirt whose arm winds up and releases every 7 s — the ball actually arcs from his hand onto the court on a parabola, rests among the boules, then returns for the next throw — and a watcher in blue pointing at the cluster mid-debate.
+- First screenshot caught the thrower built facing away from the court (rotation.y=π put the throwing arm on the wrong side) — fixed and re-verified with the arm caught mid-swing toward the court (r55-petanque).
