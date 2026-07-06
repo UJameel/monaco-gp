@@ -391,3 +391,8 @@ Zero console errors; sit/stand verified at all three spots.
 121 fps, zero console errors.
 - **Two kids chase each other around the pool plaza** (circle at −8,82, radius 4.5 m — clear of the pool wall, benches, and the show car): 1.1 m figures in red and blue tees with shorts, fast leg-scissor run cycles, pumping arms, a bounce in each stride, and a slight lean into the turn. The follower trails half a radian behind the leader — a perpetual game of tag.
 - First interior-plaza children in the world; the piscine now has sunbathers, swimmers, strollers, and play.
+
+## Loop pass 59 — 2026-07-06 (cyclist)
+121 fps, zero console errors.
+- **A cyclist cruises the west quay** (x −86.5, z −24..40, ping-pong at ~3.5 m/s): green-framed bike with torus rims and three visible spokes per wheel (so the spin reads), fork, crossbar, handlebars and saddle; rider in a yellow jersey leaning onto the bars with alternating thigh pump, white cap. Smooth 180° turn at each end of the run.
+- Route reuses the proven west-quay walker corridor. Verified riding past the AURELIA gangway mid-frame (r54-cyclist).

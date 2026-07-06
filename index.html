@@ -2143,6 +2143,41 @@ const npcLOD={women:[],men:[],gHi:null,gLo:null,sHi:null,sLo:null};
     const u=arr[3+Math.floor(k/2)];
     if(u&&!u.still)u.route={ax:r[0],az:r[1],bx:r[2],bz:r[3],
       sp:.55+Math.random()*.5,ph:Math.random()*40};});})();
+/* cyclist cruising the west quay */
+const cyclist=(function(){const g=new THREE.Group();
+  const tube=std(0x2a7d4a,.5,.3),dark=std(0x17181a,.7),skin=std(0xdcb18a,.7);
+  const wheels=[];
+  [.55,-.55].forEach(x=>{const w=new THREE.Group();w.position.set(x,.34,0);
+    const rim=new THREE.Mesh(new THREE.TorusGeometry(.34,.028,6,18),dark);rim.rotation.y=Math.PI/2;w.add(rim);
+    [[0,0],[Math.PI/3,0],[2*Math.PI/3,0]].forEach(s=>{const sp=new THREE.Mesh(geoBox,std(0xb8b2a4,.4,.5));
+      sp.scale.set(.02,.66,.02);sp.rotation.x=s[0];w.add(sp);});
+    g.add(w);wheels.push(w);});
+  const bar1=new THREE.Mesh(geoBox,tube);bar1.scale.set(.72,.045,.045);
+  bar1.position.set(0,.62,0);bar1.rotation.z=.32;g.add(bar1);
+  const bar2=new THREE.Mesh(geoBox,tube);bar2.scale.set(.5,.045,.045);
+  bar2.position.set(-.32,.62,0);bar2.rotation.z=-.9;g.add(bar2);
+  const fork=new THREE.Mesh(geoBox,tube);fork.scale.set(.045,.55,.045);
+  fork.position.set(.5,.62,0);fork.rotation.z=.28;g.add(fork);
+  const hb=new THREE.Mesh(new THREE.CylinderGeometry(.025,.025,.4,6),dark);
+  hb.rotation.x=Math.PI/2;hb.position.set(.42,.92,0);g.add(hb);
+  const saddle=new THREE.Mesh(geoBox,dark);saddle.scale.set(.24,.06,.12);
+  saddle.position.set(-.28,.92,0);g.add(saddle);
+  /* rider */
+  const jersey=std(0xd4a72e,.6);
+  const torso=new THREE.Mesh(geoBox,jersey);torso.scale.set(.5,.24,.3);
+  torso.position.set(-.02,1.12,0);torso.rotation.z=-.25;g.add(torso);
+  [-.16,.16].forEach(z=>{const ar=new THREE.Mesh(geoBox,jersey);ar.scale.set(.4,.07,.07);
+    ar.position.set(.22,1.08,z);ar.rotation.z=-.35;g.add(ar);});
+  const head=new THREE.Mesh(new THREE.SphereGeometry(.1,9,7),skin);
+  head.position.set(.3,1.3,0);g.add(head);
+  const cap=new THREE.Mesh(new THREE.SphereGeometry(.105,9,7),std(0xe8e2d4,.6));
+  cap.scale.set(1,.6,1);cap.position.set(.3,1.35,0);g.add(cap);
+  const thighs=[];
+  [-.09,.09].forEach(z=>{const th=new THREE.Group();th.position.set(-.28,.9,z);
+    const b=new THREE.Mesh(geoBox,dark);b.scale.set(.09,.42,.09);b.position.y=-.2;th.add(b);
+    g.add(th);thighs.push(th);});
+  g.traverse(m=>{m.castShadow=true;});scene.add(g);
+  return {g,wheels,thighs,az:-24,bz:40,x:-86.5,sp:.055};})();
 /* dog walker strolling the north promenade */
 const dogWalk=(function(){const g=new THREE.Group();
   const jacket=std(0x24365a,.75),trouser=std(0x2a2118,.8),skin=std(0xdcb18a,.7),
@@ -2701,6 +2736,14 @@ function animateLife(t){
     gl.g.position.set(gl.cx+Math.cos(a)*gl.r,gl.h+Math.sin(t*.7+gl.ph)*1.4,gl.cz+Math.sin(a)*gl.r);
     gl.g.rotation.y=-a-Math.PI/2;
     const fl=Math.sin(t*7+gl.ph)*.5;gl.w1.rotation.x=fl;gl.w2.rotation.x=-fl;}
+  /* cyclist: ping-pong along the quay, wheels spin, legs pump */
+  {const c=cyclist,u=(t*c.sp)%2,f=u<1?u:2-u,south=u<1;
+    c.g.position.set(c.x,0,c.az+(c.bz-c.az)*f);
+    let ty=south?-Math.PI/2:Math.PI/2,dy=ty-c.g.rotation.y;
+    c.g.rotation.y+=Math.max(-.09,Math.min(.09,dy));
+    for(const w of c.wheels)w.rotation.z=-t*10.4;
+    c.thighs[0].rotation.x=Math.sin(t*6.5)*.5;
+    c.thighs[1].rotation.x=-Math.sin(t*6.5)*.5;}
   /* dog walker: ping-pong stroll, stride + trot + tail wag */
   {const r=dogWalk,u=(t*r.sp)%2,f=u<1?u:2-u,fwd=u<1?0:Math.PI;
     r.g.position.x=r.ax+(r.bx-r.ax)*f;r.g.position.z=r.az;
