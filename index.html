@@ -1210,6 +1210,25 @@ B(.08,.08,30.2,chromeMat,-28.2,.85,107,{cast:false});B(.08,.08,30.2,chromeMat,8.
 B(8,.5,5,concMat,-20,4.75,88.5,{coll:true});
 B(8,.5,5,concMat,-20,2.75,88.5);
 B(1,5,1,concMat,-16.5,2.5,90.5,{coll:true});B(1,5,1,concMat,-23.5,2.5,90.5,{coll:true});
+/* two kids chasing each other on the pool plaza */
+const kids=[];
+(function(){const mk=(tee)=>{const g=new THREE.Group();
+    const legM=std(0xbd8d63,.7),shortM=std(0xe8e2d4,.8),teeM=std(tee,.75);
+    const legs=[],arms=[];
+    [-.06,.06].forEach(z=>{const lg=new THREE.Group();lg.position.set(0,.45,z);
+      const b=new THREE.Mesh(geoBox,legM);b.scale.set(.09,.45,.09);b.position.y=-.22;lg.add(b);
+      g.add(lg);legs.push(lg);});
+    const sh=new THREE.Mesh(geoBox,shortM);sh.scale.set(.2,.18,.22);sh.position.y=.52;g.add(sh);
+    const tor=new THREE.Mesh(geoBox,teeM);tor.scale.set(.2,.34,.26);tor.position.y=.77;g.add(tor);
+    [-.16,.16].forEach(z=>{const ar=new THREE.Group();ar.position.set(0,.9,z);
+      const b=new THREE.Mesh(geoBox,teeM);b.scale.set(.07,.3,.07);b.position.y=-.14;ar.add(b);
+      g.add(ar);arms.push(ar);});
+    const hd=new THREE.Mesh(new THREE.SphereGeometry(.095,9,7),legM);hd.position.y=1.05;g.add(hd);
+    const hr=new THREE.Mesh(new THREE.SphereGeometry(.1,9,7),std(0x3a2c1c,.85));
+    hr.scale.set(1,.7,1);hr.position.y=1.09;g.add(hr);
+    g.traverse(m=>{m.castShadow=true;});scene.add(g);
+    return {g,legs,arms};};
+  kids.push({...mk(0xd23a2e),off:0,ph:0},{...mk(0x2a5cd4),off:-.55,ph:2.1});})();
 (function sunbeds(){const bed=mergeGeometries([new THREE.BoxGeometry(1.9,.25,.7).translate(0,.35,0),
     new THREE.BoxGeometry(.6,.5,.7).translate(-.8,.55,0)]);
   const im=new THREE.InstancedMesh(bed,std(0xe8873a,.8),10);
@@ -2745,6 +2764,14 @@ function animateLife(t){
   heli.rotor.rotation.y=t*26;heli.tr.rotation.x=t*30;
   buoys.forEach((b,i)=>{b.position.y=-2.05+Math.sin(t*.9+i*1.7)*.16;
     b.rotation.x=Math.sin(t*.7+i)*.09;b.rotation.z=Math.cos(t*.6+i*2.1)*.09;});
+  /* kids: chase circle on the pool plaza */
+  for(const k of kids){const a=t*.62+k.off;
+    k.g.position.set(-8+Math.cos(a)*4.5,Math.abs(Math.sin(t*8+k.ph))*.06,82+Math.sin(a)*4.5);
+    k.g.rotation.y=Math.atan2(-Math.cos(a),-Math.sin(a));
+    k.g.rotation.z=-.09;
+    const run=Math.sin(t*8+k.ph);
+    k.legs[0].rotation.x=run*.85;k.legs[1].rotation.x=-run*.85;
+    k.arms[0].rotation.x=-run*.7;k.arms[1].rotation.x=run*.7;}
   {const bite=(t%9)<0.6?Math.sin((t%9)/.6*Math.PI):0;
     fisher.float.position.y=-1.95+Math.sin(t*1.3)*.05-bite*.22;
     fisher.line.scale.y=1-bite*.05;

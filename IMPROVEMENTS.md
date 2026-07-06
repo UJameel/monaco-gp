@@ -386,3 +386,8 @@ Zero console errors; sit/stand verified at all three spots.
 121 fps, zero console errors.
 - **A fisherman sits on a crate at the south quay edge** (58,−40.6): green coat, bucket hat, legs dangling over the wall, rod angled out over the harbor with a line dropping to a red float. The float bobs on the chop, and every ~9 s a "bite" pulls the float under while the rod tip flicks down in sync.
 - The line initially hung 1.2 m beyond the rod tip (guessed z instead of computing the tip's world position) — moved to sit directly under the tip. A false alarm about the rod pointing inland turned out to be its shadow on the building plus a bad camera angle; a second angle plus the tip math confirmed it correct.
+
+## Loop pass 58 — 2026-07-06 (kids at play)
+121 fps, zero console errors.
+- **Two kids chase each other around the pool plaza** (circle at −8,82, radius 4.5 m — clear of the pool wall, benches, and the show car): 1.1 m figures in red and blue tees with shorts, fast leg-scissor run cycles, pumping arms, a bounce in each stride, and a slight lean into the turn. The follower trails half a radian behind the leader — a perpetual game of tag.
+- First interior-plaza children in the world; the piscine now has sunbathers, swimmers, strollers, and play.
