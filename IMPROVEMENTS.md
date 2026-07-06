@@ -401,3 +401,7 @@ Zero console errors; sit/stand verified at all three spots.
 121 fps, zero console errors.
 - **A pétanque game on the pool plaza** (court at −28,79): gravel slab, five boules and an orange jack clustered at the far end, a thrower in a white shirt whose arm winds up and releases every 7 s — the ball actually arcs from his hand onto the court on a parabola, rests among the boules, then returns for the next throw — and a watcher in blue pointing at the cluster mid-debate.
 - First screenshot caught the thrower built facing away from the court (rotation.y=π put the throwing arm on the wrong side) — fixed and re-verified with the arm caught mid-swing toward the court (r55-petanque).
+
+## Loop pass 61 — 2026-07-06 (street violinist)
+121 fps, zero console errors.
+- **A violinist busks between the market and the café** (95,62): black suit, violin tucked at the neck, bow arm sawing at 4.6 rad/s with a slow body sway, an open case at his feet with three gold coins catching the light, and two listeners stopped mid-stroll to watch. Spot verified against the market stalls, café tables, and both walker route lines before building.

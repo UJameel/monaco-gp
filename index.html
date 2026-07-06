@@ -1423,6 +1423,43 @@ B(220,110,800,hillFar,-430,14,-40,{cast:false});
 /* world bounds */
 solid(-240,-235,240,-228,0,40);solid(-240,148,240,155,0,40);
 solid(-238,-235,-230,155,0,40);solid(150,-235,158,155,0,40);
+/* street violinist between the market and the café */
+const busker=(function(){
+  const suit=std(0x14161c,.7),sk=std(0xecc9a4,.7);
+  const g=new THREE.Group();g.position.set(95,0,62);g.rotation.y=-2.2;scene.add(g);
+  [-.09,.09].forEach(z=>{const l=new THREE.Mesh(geoBox,suit);l.scale.set(.13,.8,.13);
+    l.position.set(0,.4,z);g.add(l);});
+  const tor=new THREE.Mesh(geoBox,suit);tor.scale.set(.26,.6,.36);tor.position.y=1.14;g.add(tor);
+  const hd=new THREE.Mesh(new THREE.SphereGeometry(.11,10,8),sk);hd.position.y=1.56;g.add(hd);
+  const hr=new THREE.Mesh(new THREE.SphereGeometry(.115,10,8),std(0x2a2118,.85));
+  hr.scale.set(1,.7,1);hr.position.y=1.6;g.add(hr);
+  /* violin tucked at the neck */
+  const vio=new THREE.Mesh(geoBox,std(0x8a4a1e,.4));vio.scale.set(.5,.06,.16);
+  vio.position.set(.22,1.44,.12);vio.rotation.y=-.5;vio.rotation.z=.12;g.add(vio);
+  const neckArm=new THREE.Mesh(geoBox,suit);neckArm.scale.set(.4,.08,.08);
+  neckArm.position.set(.2,1.32,.16);neckArm.rotation.y=-.5;neckArm.rotation.z=.35;g.add(neckArm);
+  /* bow arm pivots at the shoulder */
+  const bowArm=new THREE.Group();bowArm.position.set(0,1.42,-.2);g.add(bowArm);
+  const ba=new THREE.Mesh(geoBox,suit);ba.scale.set(.08,.45,.08);ba.position.y=-.2;bowArm.add(ba);
+  const bow=new THREE.Mesh(geoBox,std(0xd8d2c2,.5));bow.scale.set(.55,.02,.02);
+  bow.position.set(.2,-.4,.15);bow.rotation.y=-.4;bowArm.add(bow);
+  /* open case with a glint of coins */
+  const cs=new THREE.Mesh(geoBox,std(0x1c1a17,.8));cs.scale.set(.7,.08,.45);
+  cs.position.set(95.9,.04,62.7);cs.rotation.y=.4;cs.castShadow=true;scene.add(cs);
+  [[95.8,62.6],[96,62.8],[95.95,62.55]].forEach(p=>{
+    const c=new THREE.Mesh(new THREE.CylinderGeometry(.03,.03,.012,8),std(0xd8b64a,.3,.8));
+    c.position.set(p[0],.09,p[1]);scene.add(c);});
+  /* two listeners */
+  [[93.6,63.8,.9,0x9a3548],[94.2,60.2,-.4,0x3a5a44]].forEach(L=>{
+    const lg=new THREE.Group();lg.position.set(L[0],0,L[1]);lg.rotation.y=L[2];scene.add(lg);
+    [-.09,.09].forEach(z=>{const l=new THREE.Mesh(geoBox,std(0x33302a,.85));
+      l.scale.set(.13,.8,.13);l.position.set(0,.4,z);lg.add(l);});
+    const t2=new THREE.Mesh(geoBox,std(L[3],.75));t2.scale.set(.26,.6,.36);t2.position.y=1.14;lg.add(t2);
+    const h2=new THREE.Mesh(new THREE.SphereGeometry(.11,10,8),sk);h2.position.y=1.56;lg.add(h2);
+    lg.traverse(m=>{m.castShadow=true;});});
+  g.traverse(m=>{m.castShadow=true;});
+  solid(94.6,61.6,95.4,62.4,0,1.8);
+  return {g,bowArm};})();
 /* ornate street clock on the east promenade — hands run on the game hour */
 const clockHands=[];
 (function horloge(){const green=std(0x1e4a3a,.6,.2);
@@ -2785,6 +2822,9 @@ function animateLife(t){
     r.dlegs[0].rotation.x=Math.sin(dtau)*.6;r.dlegs[3].rotation.x=Math.sin(dtau)*.6;
     r.dlegs[1].rotation.x=-Math.sin(dtau)*.6;r.dlegs[2].rotation.x=-Math.sin(dtau)*.6;
     r.tail.rotation.y=Math.sin(t*9)*.35;}
+  /* violinist: bow saws, body sways */
+  busker.bowArm.rotation.x=-.85+Math.sin(t*4.6)*.28;
+  busker.g.rotation.z=Math.sin(t*1.1)*.03;
   /* street clock hands follow the game hour */
   {const ha=(hour%12)/12*Math.PI*2,ma=(hour*60%60)/60*Math.PI*2;
     for(const ch of clockHands){ch.h.rotation.z=-ha*ch.s;ch.m.rotation.z=-ma*ch.s;}}
